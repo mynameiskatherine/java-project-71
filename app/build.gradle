@@ -13,13 +13,12 @@ repositories {
     mavenCentral()
 }
 
-compileJava {
-    options.release = 20
-    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
-}
-
 application {
     mainClass = 'hexlet.code.App'
+}
+
+compileJava {
+    options.release = 20
 }
 
 dependencies {
