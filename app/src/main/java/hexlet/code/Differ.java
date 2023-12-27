@@ -17,28 +17,39 @@ public class Differ {
 
         List<String> mergedKeys = new ArrayList<>(json1.keySet());
         for (String key : json2.keySet()) {
-            if (!(json1.containsKey(key))) mergedKeys.add(key);
+            if (!(json1.containsKey(key))) {
+                mergedKeys.add(key);
+            }
         }
 
-        List<String> result = new ArrayList<>();
+        List<String> resultList = new ArrayList<>();
         mergedKeys.stream()
                 .sorted()
                 .map(e -> {
                     if (json1.containsKey(e) && json2.containsKey(e)) {
-                        return json1.get(e).equals(json2.get(e)) ? List.of("  " + e + ": " + json1.get(e)) : List.of("- " + e + ": " + json1.get(e), "+ " + e + ": " + json2.get(e));
+                        if (json1.get(e).equals(json2.get(e))) {
+                            return List.of("  " + e + ": " + json1.get(e));
+                        } else {
+                            return List.of("- " + e + ": " + json1.get(e), "+ " + e + ": " + json2.get(e));
+                        }
                     } else if (json1.containsKey(e) && !(json2.containsKey(e))) {
                         return List.of("- " + e + ": " + json1.get(e));
                     } else {
                         return List.of("+ " + e + ": " + json2.get(e));
                     }
                 })
-                .forEach(e -> result.addAll(e));
+                .forEach(e -> resultList.addAll(e));
 
-        return result.toString();
+        String resultString = "";
+        for (String str : resultList) {
+            resultString = resultString + str + "\n";
+        }
+
+        return resultString.trim();
     }
 
     private static Map<String, String> getData(String filePath) {
-        Path file = Paths.get(filePath).isAbsolute() ? Paths.get(filePath).normalize() : Paths.get(filePath).toAbsolutePath().normalize();
+        Path file = Paths.get(filePath).normalize();
         ObjectMapper mapper = new ObjectMapper();
         try {
             String content = Files.readString(file).trim();
