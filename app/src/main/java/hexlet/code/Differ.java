@@ -14,14 +14,12 @@ public class Differ {
     public static String generate(String filePath1, String filePath2) {
         Map<String, String> json1 = getData(filePath1);
         Map<String, String> json2 = getData(filePath2);
-
         List<String> mergedKeys = new ArrayList<>(json1.keySet());
         for (String key : json2.keySet()) {
             if (!(json1.containsKey(key))) {
                 mergedKeys.add(key);
             }
         }
-
         List<String> resultList = new ArrayList<>();
         mergedKeys.stream()
                 .sorted()
@@ -39,12 +37,10 @@ public class Differ {
                     }
                 })
                 .forEach(e -> resultList.addAll(e));
-
         String resultString = "";
         for (String str : resultList) {
             resultString = resultString + str + "\n";
         }
-
         return resultString.trim();
     }
 
