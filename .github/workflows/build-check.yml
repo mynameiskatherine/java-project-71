@@ -1,8 +1,12 @@
 name: build-check
 on: push
 jobs:
-  build:
+  gradle:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: gradle build
+      - name: Setup Gradle
+      	uses: gradle/gradle-build-action@v2
+      - name: Execute Gradle build
+      	run: ./gradlew build
