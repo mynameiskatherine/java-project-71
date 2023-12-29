@@ -21,8 +21,8 @@ run:
 test:
 	./gradlew test
 
-#report:
-#	./gradlew jacocoTestReport
+report:
+	./gradlew jacocoTestReport
 
 lint:
 	./gradlew checkstyleMain checkstyleTest
