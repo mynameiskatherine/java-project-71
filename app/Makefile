@@ -4,7 +4,7 @@ run-dist:
 	./build/install/app/bin/app
 
 setup:
-	./gradlew wrapper --gradle-version 8.5
+	./gradlew wrapper --gradle-version 8.3
 
 clean:
 	./gradlew clean
@@ -25,7 +25,7 @@ report:
 	./gradlew jacocoTestReport
 
 lint:
-	./app/gradlew checkstyleMain checkstyleTest
+	./gradlew checkstyleMain checkstyleTest
 
 check-deps:
 	./gradlew dependencyUpdates -Drevision=release
