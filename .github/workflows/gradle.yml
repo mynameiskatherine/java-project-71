@@ -29,8 +29,9 @@ jobs:
           gradle-version: 8.3
           arguments: build
           build-root-directory: app
-    - name: run linter
-      run: make lint
+#removing, as done during gradle setup
+#    - name: run linter
+#      run: make lint
 #    - name: run test
 #      run: ./gradlew test
     - name: Publish code coverage
