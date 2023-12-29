@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ApplicationTest {
     @Test
     void testMain() {
-        String filepath1 = "/home/kate/Projects/java-project-71/app/src/test/resources/file1.json";
-        String filepath2 = "/home/kate/Projects/java-project-71/app/src/test/resources/file2.json";
+        String filepath1 = "src/test/resources/file1.json";
+        String filepath2 = "src/test/resources/file2.json";
         String expected = "- follow: false\n"
                 + "  host: hexlet.io\n"
                 + "- proxy: 123.234.53.22\n"

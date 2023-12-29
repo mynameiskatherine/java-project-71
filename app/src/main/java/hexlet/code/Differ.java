@@ -45,7 +45,8 @@ public class Differ {
     }
 
     private static Map<String, String> getData(String filePath) {
-        Path file = Paths.get(filePath).normalize();
+        Path file = Paths.get(filePath).toAbsolutePath().normalize();
+        //Paths.get("src", "main", "resources", fileName).toAbsolutePath().normalize()
         ObjectMapper mapper = new ObjectMapper();
         try {
             String content = Files.readString(file).trim();
