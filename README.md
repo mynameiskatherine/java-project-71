@@ -4,7 +4,7 @@
 Training project - console json comparing tool.
 
 ### Demo of working
-link
+<img width="993" alt="Screenshot 2024-01-03 at 17 31 23" src="https://github.com/mynameiskatherine/java-project-71/assets/125584522/e12bdc7b-ccef-41fd-bb4f-ece476f5e1ec">
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/mynameiskatherine/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/mynameiskatherine/java-project-71/actions)
