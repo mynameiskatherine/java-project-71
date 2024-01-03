@@ -14,7 +14,7 @@ import org.apache.commons.io.FilenameUtils;
 
 public class Parser {
 
-    public static Map<String,String> parse(String filePath) {
+    public static Map<String, String> parse(String filePath) {
         String fileType = FilenameUtils.getExtension(filePath);
         Path file = Paths.get(filePath).toAbsolutePath().normalize();
 
