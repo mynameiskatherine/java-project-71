@@ -14,13 +14,14 @@ public class App implements Runnable {
     @Parameters(paramLabel = "filePath2", description = "path to second file")
     private String filePath2;
 
-    @Option(names = { "-f", "--format" }, defaultValue = "stylish", description = "output format [default: stylish]")
-    private String format = "stylish";
+    @Option(names = { "-f", "--format" }, defaultValue = "stylish",
+            description = "output format [default: ${DEFAULT-VALUE}]")
+    private String format;
 
     @Override
     public void run() {
         try {
-            System.out.println(Differ.generate(filePath1, filePath2));
+            System.out.println(Formatter.format(Differ.generate(filePath1, filePath2), format));
         } catch (Exception e) {
             throw new RuntimeException();
         }

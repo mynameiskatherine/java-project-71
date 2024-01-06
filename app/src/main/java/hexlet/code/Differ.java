@@ -1,44 +1,50 @@
 package hexlet.code;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Differ {
-    public static String generate(String filePath1, String filePath2) {
-        Map<String, String> file1 = Parser.parse(filePath1);
-        Map<String, String> file2 = Parser.parse(filePath2);
+    public static Map<Map<String, Object>, String> generate(String filePath1, String filePath2) {
+        Map<String, Object> file1 = Parser.parse(filePath1);
+        Map<String, Object> file2 = Parser.parse(filePath2);
+
+        Map<Map<String, Object>, String> result = new LinkedHashMap<>();
+
         Set<String> mergedKeys = new HashSet<>();
         mergedKeys.addAll(file1.keySet());
         mergedKeys.addAll(file2.keySet());
-        String resultString = "";
-        if (mergedKeys.isEmpty()) {
-            return resultString;
-        }
 
-        List<String> resultList = new ArrayList<>();
+        if (mergedKeys.isEmpty()) {
+            return result;
+        }
         mergedKeys.stream()
                 .sorted()
                 .map(e -> {
+                    Map<Map<String, Object>, String> diffMap = new LinkedHashMap<>();
+                    Map<String, Object> nestedMap = new LinkedHashMap<>();
                     if (file1.containsKey(e) && file2.containsKey(e)) {
-                        if (file1.get(e).equals(file2.get(e))) {
-                            return List.of("  " + e + ": " + file1.get(e));
+                        if (Objects.deepEquals(file1.get(e), file2.get(e))) {
+                            nestedMap.put(e, file1.get(e));
+                            diffMap.put(new LinkedHashMap<>(nestedMap), " ");
                         } else {
-                            return List.of("- " + e + ": " + file1.get(e), "+ " + e + ": " + file2.get(e));
+                            nestedMap.put(e, file1.get(e));
+                            diffMap.put(new LinkedHashMap<>(nestedMap), "-");
+                            nestedMap.put(e, file2.get(e));
+                            diffMap.put(new LinkedHashMap<>(nestedMap), "+");
                         }
                     } else if (file1.containsKey(e) && !(file2.containsKey(e))) {
-                        return List.of("- " + e + ": " + file1.get(e));
+                        nestedMap.put(e, file1.get(e));
+                        diffMap.put(new LinkedHashMap<>(nestedMap), "-");
                     } else {
-                        return List.of("+ " + e + ": " + file2.get(e));
+                        nestedMap.put(e, file2.get(e));
+                        diffMap.put(new LinkedHashMap<>(nestedMap), "+");
                     }
+                    return diffMap;
                 })
-                .forEach(resultList::addAll);
-
-        for (String str : resultList) {
-            resultString = resultString + str + "\n";
-        }
-        return resultString.trim();
+                .forEach(e -> result.putAll(e));
+        return result;
     }
 }
