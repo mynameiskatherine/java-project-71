@@ -10,9 +10,9 @@ import picocli.CommandLine.Parameters;
 public class App implements Runnable {
 
     @Parameters(paramLabel = "filePath1", description = "path to first file")
-    private String filePath1;
+    private String filepath1;
     @Parameters(paramLabel = "filePath2", description = "path to second file")
-    private String filePath2;
+    private String filepath2;
 
     @Option(names = { "-f", "--format" }, defaultValue = "stylish",
             description = "output format [default: ${DEFAULT-VALUE}]")
@@ -21,7 +21,7 @@ public class App implements Runnable {
     @Override
     public void run() {
         try {
-            System.out.println(Formatter.format(Differ.generate(filePath1, filePath2), format));
+            System.out.println(Differ.generate(filepath1, filepath2, format));
         } catch (Exception e) {
             throw new RuntimeException();
         }

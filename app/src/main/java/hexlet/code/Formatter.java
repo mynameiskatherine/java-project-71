@@ -1,25 +1,20 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Plain;
+import hexlet.code.formatters.Stylish;
+
+import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Formatter {
-    public static String format(Map<Map<String, Object>, String> text, String selectedFormat) {
+    public static String format(Map<Map<String, String>, List<Object>> map, String selectedFormat) {
 
         if (selectedFormat.equals("stylish")) {
-            String result = text.keySet().stream()
-                            .map(e -> {
-                                String status = text.get(e);
-                                String entry = e.entrySet().stream()
-                                        .map(i -> i.getKey() + ": " + i.getValue())
-                                        .collect(Collectors.joining());
-                                return  "  " + status + " " + entry + "\n";
-                            })
-                    .collect(Collectors.joining());
-            return "{\n" + result + "}";
+            return Stylish.makeStylish(map);
+        } else if (selectedFormat.equals("plain")) {
+            return Plain.makePlain(map);
         } else {
-            return text.toString().trim();
+            return map.toString().trim();
         }
     }
 }
-
