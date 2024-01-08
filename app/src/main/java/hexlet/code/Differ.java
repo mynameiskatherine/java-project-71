@@ -10,7 +10,12 @@ import java.util.Set;
 
 public class Differ {
 
-    public static Map<Map<String, String>, List<Object>> generate(String filepath1, String filepath2) {
+    public static String generate(String filepath1, String filepath2) {
+        String format = "stylish";
+        return Differ.generate(filepath1, filepath2, format);
+    }
+
+    public static String generate(String filepath1, String filepath2, String format) {
         Map<String, Object> file1 = Parser.parse(filepath1);
         Map<String, Object> file2 = Parser.parse(filepath2);
 
@@ -42,10 +47,6 @@ public class Differ {
                     return diffMap;
                 })
                 .forEach(result::putAll);
-        return result;
-    }
-
-    public static String generate(String filepath1, String filepath2, String format) {
-        return Formatter.format(Differ.generate(filepath1, filepath2), format);
+        return Formatter.format(result, format);
     }
 }
