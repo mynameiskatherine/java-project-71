@@ -1,6 +1,12 @@
 package hexlet.code;
 
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ApplicationTest {
@@ -153,6 +159,17 @@ class ApplicationTest {
         String format = "plain";
         String expected = "";
         String actual = Differ.generate(filepath1, filepath2, format);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void testDifferJsonJson() throws IOException {
+        String filepath1 = "src/test/resources/file1.json";
+        String filepath2 = "src/test/resources/file2.json";
+        String format = "json";
+        Path expectedFile = Paths.get("src/test/resources/jsonFormatTest.txt").toAbsolutePath().normalize();
+        String expected = new String(Files.readAllBytes(expectedFile)).trim();
+        String actual = Differ.generate(filepath1, filepath2, format).trim();
         assertThat(actual).isEqualTo(expected);
     }
 }
