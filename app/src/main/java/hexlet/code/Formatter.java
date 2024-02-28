@@ -8,17 +8,17 @@ import java.util.List;
 import java.util.Map;
 
 public class Formatter {
-    public static String format(Map<Map<String, String>, List<Object>> map, String selectedFormat) {
+    public static String format(List<Map<String, Object>> rawTree, String selectedFormat) {
 
         try {
             if (selectedFormat.equals("stylish")) {
-                return Stylish.makeStylish(map);
+                return Stylish.makeStylish(rawTree);
             } else if (selectedFormat.equals("plain")) {
-                return Plain.makePlain(map);
+                return Plain.makePlain(rawTree);
             } else if (selectedFormat.equals("json")) {
-                return Json.makeJson(map);
+                return Json.makeJson(rawTree);
             } else {
-                return map.toString().trim();
+                return rawTree.toString().trim();
             }
         } catch (Exception e) {
             throw new RuntimeException();

@@ -1,12 +1,14 @@
 package hexlet.code;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import org.apache.commons.io.FilenameUtils;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 public class Differ {
 
@@ -16,37 +18,25 @@ public class Differ {
     }
 
     public static String generate(String filepath1, String filepath2, String format) {
-        Map<String, Object> file1 = Parser.parse(filepath1);
-        Map<String, Object> file2 = Parser.parse(filepath2);
+        Map<String, Object> file1 = Parser.parse(getFileData(filepath1));
+        Map<String, Object> file2 = Parser.parse(getFileData(filepath2));
 
-        Map<Map<String, String>, List<Object>> result = new LinkedHashMap<>();
-        Set<String> mergedKeys = new HashSet<>(file1.keySet());
-        mergedKeys.addAll(file2.keySet());
-
-        mergedKeys.stream()
-                .sorted()
-                .map(e -> {
-                    Map<Map<String, String>, List<Object>> diffMap = new LinkedHashMap<>();
-                    List<Object> valueList = new ArrayList<>();
-                    if (file1.containsKey(e) && file2.containsKey(e)) {
-                        if (Objects.deepEquals(file1.get(e), file2.get(e))) {
-                            valueList.add(file1.get(e));
-                            diffMap.put(Map.of(e, "unchanged"), valueList);
-                        } else {
-                            valueList.add(file1.get(e));
-                            valueList.add(file2.get(e));
-                            diffMap.put(Map.of(e, "updated"), valueList);
-                        }
-                    } else if (file1.containsKey(e) && !(file2.containsKey(e))) {
-                        valueList.add(file1.get(e));
-                        diffMap.put(Map.of(e, "removed"), valueList);
-                    } else {
-                        valueList.add(file2.get(e));
-                        diffMap.put(Map.of(e, "added"), valueList);
-                    }
-                    return diffMap;
-                })
-                .forEach(result::putAll);
-        return Formatter.format(result, format);
+        List<Map<String, Object>> rawTree = Tree.build(file1, file2);
+        return Formatter.format(rawTree, format);
     }
+
+    private static Map<String, String> getFileData(String filepath) {
+        Map<String, String> fileData = new HashMap<>();
+        try {
+            String fileType = FilenameUtils.getExtension(filepath);
+            Path file = Paths.get(filepath).toAbsolutePath().normalize();
+            String content = Files.readString(file).trim();
+            fileData.put("fileType", fileType);
+            fileData.put("content", content);
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+        return fileData;
+    }
+
 }
