@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-public class Tree {
+public final class Tree {
     public static List<Map<String, Object>> build(Map<String, Object> file1, Map<String, Object> file2) {
         Set<String> mergedKeys = new HashSet<>(file1.keySet());
         mergedKeys.addAll(file2.keySet());

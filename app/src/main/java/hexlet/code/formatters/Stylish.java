@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Stylish {
+public final class Stylish {
     public static String makeStylish(List<Map<String, Object>> rawTree) {
         String result = rawTree.stream()
                 .map(e -> {

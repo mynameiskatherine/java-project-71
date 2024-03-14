@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Parser {
+public final class Parser {
 
     public static Map<String, Object> parse(Map<String, String> fileTypeAndContent) {
         String fileType = fileTypeAndContent.get("fileType");

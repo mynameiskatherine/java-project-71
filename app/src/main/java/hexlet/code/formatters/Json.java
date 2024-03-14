@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Json {
+public final class Json {
     public static String makeJson(List<Map<String, Object>> rawTree) {
         Map<String, Map<String, Object>> result = new LinkedHashMap<>();
         rawTree.forEach(e -> {

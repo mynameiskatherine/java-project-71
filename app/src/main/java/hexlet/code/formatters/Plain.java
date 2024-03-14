@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Plain {
+public final class Plain {
     public static String makePlain(List<Map<String, Object>> rawTree) {
         String result = rawTree.stream()
                 .map(e -> {

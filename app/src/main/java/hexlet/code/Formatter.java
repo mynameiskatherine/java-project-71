@@ -7,7 +7,7 @@ import hexlet.code.formatters.Stylish;
 import java.util.List;
 import java.util.Map;
 
-public class Formatter {
+public final class Formatter {
     public static String format(List<Map<String, Object>> rawTree, String selectedFormat) {
 
         try {
