@@ -2,6 +2,7 @@ package hexlet.code;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -17,23 +18,25 @@ public final class Tree {
         mergedKeys.stream()
                 .sorted()
                 .forEach(e -> {
-                    List<Object> valueList = new ArrayList<>();
+                    Map<String, Object> unit = new LinkedHashMap<>();
+                    unit.put("key", e);
                     if (file1.containsKey(e) && file2.containsKey(e)) {
                         if (Objects.deepEquals(file1.get(e), file2.get(e))) {
-                            valueList.add(file1.get(e));
-                            result.add(Map.of("key", e, "status", "unchanged", "value", valueList));
+                            unit.put("status", "unchanged");
+                            unit.put("__value", file1.get(e));
                         } else {
-                            valueList.add(file1.get(e));
-                            valueList.add(file2.get(e));
-                            result.add(Map.of("key", e, "status", "updated", "value", valueList));
+                            unit.put("status", "updated");
+                            unit.put("__value1", file1.get(e));
+                            unit.put("__value2", file2.get(e));
                         }
                     } else if (file1.containsKey(e) && !(file2.containsKey(e))) {
-                        valueList.add(file1.get(e));
-                        result.add(Map.of("key", e, "status", "removed", "value", valueList));
+                        unit.put("status", "removed");
+                        unit.put("__value1", file1.get(e));
                     } else {
-                        valueList.add(file2.get(e));
-                        result.add(Map.of("key", e, "status", "added", "value", valueList));
+                        unit.put("status", "added");
+                        unit.put("__value2", file2.get(e));
                     }
+                    result.add(unit);
                 });
         return result;
     }

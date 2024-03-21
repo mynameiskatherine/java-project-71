@@ -8,18 +8,23 @@ public final class Plain {
     public static String makePlain(List<Map<String, Object>> rawTree) {
         String result = rawTree.stream()
                 .map(e -> {
-                    List<Object> values = (List<Object>) e.get("value");
-                    if (e.get("status").equals("unchanged")) {
-                        return "";
-                    } else if (e.get("status").equals("updated")) {
-                        return "Property '" + e.get("key") + "' was updated. From "
-                                + valueToString(values.get(0))
-                                + " to " + valueToString(values.get(1)) + "\n";
-                    } else if (e.get("status").equals("removed")) {
-                        return "Property '" + e.get("key") + "' was removed\n";
-                    } else {
-                        return "Property '" + e.get("key") + "' was added with value: "
-                                + valueToString(values.get(0)) + "\n";
+                    switch ((String) e.get("status")) {
+                        case ("unchanged") -> {
+                            return "";
+                        }
+                        case ("updated") -> {
+                            return "Property '" + e.get("key") + "' was updated. From "
+                                    + valueToString(e.get("__value1")) + " to "
+                                    + valueToString(e.get("__value2")) + "\n";
+                        }
+                        case ("removed") -> {
+                            return "Property '" + e.get("key") + "' was removed\n";
+                        }
+                        case ("added") -> {
+                            return "Property '" + e.get("key") + "' was added with value: "
+                                    + valueToString(e.get("__value2")) + "\n";
+                        }
+                        default -> throw new RuntimeException("no status found");
                     }
                 })
                 .collect(Collectors.joining());

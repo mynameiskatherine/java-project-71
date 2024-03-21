@@ -11,14 +11,19 @@ public final class Formatter {
     public static String format(List<Map<String, Object>> rawTree, String selectedFormat) {
 
         try {
-            if (selectedFormat.equals("stylish")) {
-                return Stylish.makeStylish(rawTree);
-            } else if (selectedFormat.equals("plain")) {
-                return Plain.makePlain(rawTree);
-            } else if (selectedFormat.equals("json")) {
-                return Json.makeJson(rawTree);
-            } else {
-                return rawTree.toString().trim();
+            switch (selectedFormat) {
+                case ("stylish") -> {
+                    return Stylish.makeStylish(rawTree);
+                }
+                case ("plain") -> {
+                    return Plain.makePlain(rawTree);
+                }
+                case ("json") -> {
+                    return Json.makeJson(rawTree);
+                }
+                default -> {
+                    return rawTree.toString().trim();
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException();

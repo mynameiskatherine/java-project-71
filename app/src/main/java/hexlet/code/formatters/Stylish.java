@@ -5,19 +5,33 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class Stylish {
+    private static final String STRINGSTARTNEUTRAL = "    ";
+    private static final String STRINGSTARTPOSITIVE = "  + ";
+    private static final String STRINGSTARTNEGATIVE = "  - ";
+    private static final String STRINGDIVIDER = ": ";
+
+    private static String constructString(String stringStart, Object key, Object value) {
+        return stringStart + key + STRINGDIVIDER + value + "\n";
+    }
+
     public static String makeStylish(List<Map<String, Object>> rawTree) {
         String result = rawTree.stream()
                 .map(e -> {
-                    List<Object> values = (List<Object>) e.get("value");
-                    if (e.get("status").equals("unchanged")) {
-                        return "    " + e.get("key") + ": " + values.get(0) + "\n";
-                    } else if (e.get("status").equals("updated")) {
-                        return "  - " + e.get("key") + ": " + values.get(0) + "\n"
-                                + "  + " + e.get("key") + ": " + values.get(1) + "\n";
-                    } else if (e.get("status").equals("removed")) {
-                        return "  - " + e.get("key") + ": " + values.get(0) + "\n";
-                    } else {
-                        return "  + " + e.get("key") + ": " + values.get(0) + "\n";
+                    switch ((String) e.get("status")) {
+                        case ("unchanged") -> {
+                            return constructString(STRINGSTARTNEUTRAL, e.get("key"), e.get("__value"));
+                        }
+                        case ("updated") -> {
+                            return constructString(STRINGSTARTNEGATIVE, e.get("key"), e.get("__value1"))
+                                    + constructString(STRINGSTARTPOSITIVE, e.get("key"),  e.get("__value2"));
+                        }
+                        case ("removed") -> {
+                            return constructString(STRINGSTARTNEGATIVE, e.get("key"), e.get("__value1"));
+                        }
+                        case ("added") -> {
+                            return constructString(STRINGSTARTPOSITIVE, e.get("key"),  e.get("__value2"));
+                        }
+                        default -> throw new RuntimeException("no status found");
                     }
                 })
                 .collect(Collectors.joining());

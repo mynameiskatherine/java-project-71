@@ -29,7 +29,7 @@ public final class Differ {
         Map<String, String> fileData = new HashMap<>();
         try {
             String fileType = FilenameUtils.getExtension(filepath);
-            Path file = Paths.get(filepath).toAbsolutePath().normalize();
+            Path file = getPath(filepath);
             String content = Files.readString(file).trim();
             fileData.put("fileType", fileType);
             fileData.put("content", content);
@@ -37,6 +37,10 @@ public final class Differ {
             throw new RuntimeException();
         }
         return fileData;
+    }
+
+    private static Path getPath(String filepath) {
+        return Paths.get(filepath).toAbsolutePath().normalize();
     }
 
 }
