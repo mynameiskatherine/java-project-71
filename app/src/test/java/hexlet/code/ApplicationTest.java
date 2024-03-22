@@ -11,7 +11,12 @@ import java.nio.file.Path;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ApplicationTest {
-    static String filepathStart;
+
+    private static String filepathStart;
+
+    private static Path makePath(String fileName) {
+        return Paths.get(filepathStart + fileName).toAbsolutePath().normalize();
+    }
     @BeforeAll
     static void setUp() {
         filepathStart = "src/test/resources/fixtures/";
@@ -23,9 +28,8 @@ class ApplicationTest {
         String file2 = "file2.json";
         String fileExpected = "stylishOrNoFormatResult.txt";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2);
-        Path expectedFile = Paths.get(filepathStart + fileExpected).toAbsolutePath().normalize();
-        String expected = new String(Files.readAllBytes(expectedFile));
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString());
+        String expected = new String(Files.readAllBytes(makePath(fileExpected)));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -37,9 +41,8 @@ class ApplicationTest {
         String format = "stylish";
         String fileExpected = "stylishOrNoFormatResult.txt";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
-        Path expectedFile = Paths.get(filepathStart + fileExpected).toAbsolutePath().normalize();
-        String expected = new String(Files.readAllBytes(expectedFile));
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
+        String expected = new String(Files.readAllBytes(makePath(fileExpected)));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -51,9 +54,8 @@ class ApplicationTest {
         String format = "stylish";
         String fileExpected = "stylishOrNoFormatResult.txt";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
-        Path expectedFile = Paths.get(filepathStart + fileExpected).toAbsolutePath().normalize();
-        String expected = new String(Files.readAllBytes(expectedFile));
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
+        String expected = new String(Files.readAllBytes(makePath(fileExpected)));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -65,9 +67,8 @@ class ApplicationTest {
         String format = "plain";
         String fileExpected = "plainFormatResult.txt";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
-        Path expectedFile = Paths.get(filepathStart + fileExpected).toAbsolutePath().normalize();
-        String expected = new String(Files.readAllBytes(expectedFile));
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
+        String expected = new String(Files.readAllBytes(makePath(fileExpected)));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -79,9 +80,8 @@ class ApplicationTest {
         String format = "plain";
         String fileExpected = "plainFormatResult.txt";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
-        Path expectedFile = Paths.get(filepathStart + fileExpected).toAbsolutePath().normalize();
-        String expected = new String(Files.readAllBytes(expectedFile));
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
+        String expected = new String(Files.readAllBytes(makePath(fileExpected)));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -93,9 +93,8 @@ class ApplicationTest {
         String format = "json";
         String fileExpected = "jsonFormatResult.txt";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
-        Path expectedFile = Paths.get(filepathStart + fileExpected).toAbsolutePath().normalize();
-        String expected = new String(Files.readAllBytes(expectedFile));
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
+        String expected = new String(Files.readAllBytes(makePath(fileExpected)));
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -107,7 +106,7 @@ class ApplicationTest {
         String format = "stylish";
         String expected = "{\n}";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -119,7 +118,7 @@ class ApplicationTest {
         String format = "plain";
         String expected = "";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -131,7 +130,7 @@ class ApplicationTest {
         String format = "stylish";
         String expected = "{\n}";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
 
         assertThat(actual).isEqualTo(expected);
     }
@@ -143,7 +142,7 @@ class ApplicationTest {
         String format = "plain";
         String expected = "";
 
-        String actual = Differ.generate(filepathStart + file1, filepathStart + file2, format);
+        String actual = Differ.generate(makePath(file1).toString(), makePath(file2).toString(), format);
 
         assertThat(actual).isEqualTo(expected);
     }
