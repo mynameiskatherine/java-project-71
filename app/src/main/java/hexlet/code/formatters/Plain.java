@@ -8,21 +8,25 @@ public final class Plain {
     public static String makePlain(List<Map<String, Object>> rawTree) {
         String result = rawTree.stream()
                 .map(e -> {
-                    switch ((String) e.get("status")) {
+                    StringBuilder stringBuilder = new StringBuilder("Property '");
+                    switch ((String) e.get("type")) {
                         case ("unchanged") -> {
                             return "";
                         }
                         case ("updated") -> {
-                            return "Property '" + e.get("key") + "' was updated. From "
-                                    + valueToString(e.get("__value1")) + " to "
-                                    + valueToString(e.get("__value2")) + "\n";
+                            stringBuilder.append(e.get("key")).append("' was updated. From ")
+                                    .append(valueToString(e.get("__value1"))).append(" to ")
+                                    .append(valueToString(e.get("__value2"))).append("\n");
+                            return stringBuilder.toString();
                         }
                         case ("removed") -> {
-                            return "Property '" + e.get("key") + "' was removed\n";
+                            stringBuilder.append(e.get("key")).append("' was removed\n");
+                            return stringBuilder.toString();
                         }
                         case ("added") -> {
-                            return "Property '" + e.get("key") + "' was added with value: "
-                                    + valueToString(e.get("__value2")) + "\n";
+                            stringBuilder.append(e.get("key")).append("' was added with value: ")
+                                    .append(valueToString(e.get("__value2"))).append("\n");
+                            return stringBuilder.toString();
                         }
                         default -> throw new RuntimeException("no status found");
                     }

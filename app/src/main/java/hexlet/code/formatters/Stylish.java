@@ -11,13 +11,15 @@ public final class Stylish {
     private static final String STRINGDIVIDER = ": ";
 
     private static String constructString(String stringStart, Object key, Object value) {
-        return stringStart + key + STRINGDIVIDER + value + "\n";
+        StringBuilder stringBuilder = new StringBuilder(stringStart);
+        stringBuilder.append(key).append(STRINGDIVIDER).append(value).append("\n");
+        return stringBuilder.toString();
     }
 
     public static String makeStylish(List<Map<String, Object>> rawTree) {
         String result = rawTree.stream()
                 .map(e -> {
-                    switch ((String) e.get("status")) {
+                    switch ((String) e.get("type")) {
                         case ("unchanged") -> {
                             return constructString(STRINGSTARTNEUTRAL, e.get("key"), e.get("__value"));
                         }

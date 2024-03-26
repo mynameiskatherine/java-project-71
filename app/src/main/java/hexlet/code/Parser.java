@@ -19,7 +19,7 @@ public final class Parser {
             result = switch (fileType) {
                 case "json" ->
                         new ObjectMapper().readValue(content, new TypeReference<Map<String, Object>>() { });
-                case "yml" ->
+                case "yml", "yaml" ->
                         new YAMLMapper().readValue(content, new TypeReference<Map<String, Object>>() { });
                 default -> result;
             };

@@ -22,18 +22,18 @@ public final class Tree {
                     unit.put("key", e);
                     if (file1.containsKey(e) && file2.containsKey(e)) {
                         if (Objects.deepEquals(file1.get(e), file2.get(e))) {
-                            unit.put("status", "unchanged");
+                            unit.put("type", "unchanged");
                             unit.put("__value", file1.get(e));
                         } else {
-                            unit.put("status", "updated");
+                            unit.put("type", "updated");
                             unit.put("__value1", file1.get(e));
                             unit.put("__value2", file2.get(e));
                         }
                     } else if (file1.containsKey(e) && !(file2.containsKey(e))) {
-                        unit.put("status", "removed");
+                        unit.put("type", "removed");
                         unit.put("__value1", file1.get(e));
                     } else {
-                        unit.put("status", "added");
+                        unit.put("type", "added");
                         unit.put("__value2", file2.get(e));
                     }
                     result.add(unit);

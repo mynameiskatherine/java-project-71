@@ -22,7 +22,7 @@ public final class Formatter {
                     return Json.makeJson(rawTree);
                 }
                 default -> {
-                    return rawTree.toString().trim();
+                    throw new RuntimeException("No such format found");
                 }
             }
         } catch (Exception e) {
